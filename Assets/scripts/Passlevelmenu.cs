@@ -2,27 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Passlevelmenu : MonoBehaviour {
 
-    public GameObject passlevelMenu;
+    public  GameObject passlevelMenu;
+    public Image starpicture;
 
-    public void ShowPassLevelMenu()//点击“暂停”时执行此方法
+    
+    public void ShowPassLevelMenu(float proportion)
     {
         Time.timeScale = 0;
+        
         passlevelMenu.SetActive(true);
+        showstar(proportion);
     }
 
-    public void NextLevel()//点击“回到游戏”时执行此方法
+    public void NextLevel() 
     {
-        //SceneManager.LoadScene(level2);
+        SceneManager.LoadScene("level2");
     }
 
-    public void OnRestart()//点击“重新开始”时执行此方法
+    public void OnRestart()
     {
-        //Loading Scene0
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        
+    }
+    public void showstar(float proportion)
+    {
+        if (proportion >= 0.6 && proportion < 0.7)
+        {
+            starpicture.fillAmount = 0.33f;
+        }
+        if (proportion >= 0.7 && proportion <0.8)
+        {
+            starpicture.fillAmount = 0.67f;
+        }
+        if (proportion >= 0.8)
+        {
+            starpicture.fillAmount = 1;
+        }
+
     }
 
 }

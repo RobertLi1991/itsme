@@ -21,8 +21,9 @@ public class ButtonPause : MonoBehaviour {
     public void OnRestart()//点击“重新开始”时执行此方法
     {
         //Loading Scene0
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+       
     }
 
 }

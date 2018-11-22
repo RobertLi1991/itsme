@@ -23,9 +23,12 @@ public class playercontrol : MonoBehaviour {
     private Slider WhiteProportion;
     [SerializeField]
     private Image Uiheart;
+    
+    public GameObject PassLevelMenu;
+    public GameObject DeathMenu;
     // Use this for initialization
     void Start () {
-       
+        Time.timeScale = 1f;
     }
 	
 	// Update is called once per frame
@@ -34,17 +37,18 @@ public class playercontrol : MonoBehaviour {
         
         UpandDown();
         transform.Translate(Vector2.right * m_hspeed * Time.deltaTime);
+        Debug.Log(Time.deltaTime);
         if (m_hp<=0)
         {
             Die();
         }
         m_wbproportion = m_whitepoint / (m_whitepoint + m_blackpoint);
         WhiteProportion.value = m_wbproportion;
-        //MywhiteproportionText.text = "White proportion:" + m_wbproportion.ToString();
+        MywhiteproportionText.text = "White proportion:" + (m_wbproportion * 100).ToString("#0.0")+"%";
        
 
     }
-    
+
     private void OnTriggerEnter2D (Collider2D collision)
     {
         if(collision.gameObject.tag=="blackfood")
@@ -53,6 +57,7 @@ public class playercontrol : MonoBehaviour {
             playerani.SetFloat("blackflag",1);
             
             m_blackpoint=foodparent.addpoint(m_blackpoint,collision.gameObject.name);
+            
         }
         if (collision.gameObject.tag == "whitefood")
         {
@@ -66,19 +71,19 @@ public class playercontrol : MonoBehaviour {
         {
           
             m_hp = 0;
-            //MyHpText.text="HP:"+m_hp;
+           
             Uiheart.fillAmount = 0.33f*m_hp;
         }
         if (collision.gameObject.tag == "blackenemy" && blackflag ==-1)
         {
             --m_hp;
-            //MyHpText.text = "HP:" + m_hp;
+            
             Uiheart.fillAmount = 0.33f * m_hp;
         }
         if (collision.gameObject.tag == "enemywhite" && blackflag ==1)
         {
             --m_hp;
-            //MyHpText.text = "HP:" + m_hp;
+           
             Uiheart.fillAmount = 0.33f * m_hp;
         }
         if (collision.gameObject.tag == "whiteheart" )
@@ -86,13 +91,26 @@ public class playercontrol : MonoBehaviour {
             m_hp++;
              if (m_hp>3)
              { m_hp = 3; }
-              //MyHpText.text = "HP:" + m_hp;
+           
             Uiheart.fillAmount = 0.33f * m_hp;
-        }   
+        }
+        if (collision.gameObject.name=="rightcollider")
+        {
+            if (m_wbproportion>=0.6)
+            {
+                PassLevelMenu.GetComponent<Passlevelmenu>().ShowPassLevelMenu(m_wbproportion);
+
+            }
+            else
+            {
+                DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
+            }
+        }
     }
     private void Die()
     {
-        SceneManager.LoadScene("level1");
+        DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
+       
     }
     private void UpandDown()
     {
