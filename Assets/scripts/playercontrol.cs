@@ -6,68 +6,61 @@ using UnityEngine.SceneManagement;
 
 public class playercontrol : MonoBehaviour {
     
-    public float m_speed = 5f;
+
     public float m_hspeed = 5f;
     public Animator playerani;
-    public float blackflag=-1;
+    public  float blackflag=-1;
+    public static float Dieflag = -1;
+    public float WinFlag = -1;
+    public static float PauseFlag = -1;
     public float m_hp = 3;
-    public float m_blackpoint=0;
-    public float m_whitepoint=0;
-    public float m_wbproportion = 0;
     private Vector3 targetPosition;
     [SerializeField]
     private Text MyHpText;
     [SerializeField]
-    private Text MywhiteproportionText;
-    [SerializeField]
-    private Slider WhiteProportion;
+    private Text Score;
     [SerializeField]
     private Image Uiheart;
-    
     public GameObject PassLevelMenu;
     public GameObject DeathMenu;
+    
     // Use this for initialization
     void Start () {
-        Time.timeScale = 1f;
+      
     }
 	
 	// Update is called once per frame
 	void Update ()
-    {
+    {   
+        if(Dieflag==1|| WinFlag == 1||PauseFlag==1)
+        {
+            return;
+        }
         
         UpandDown();
         transform.Translate(Vector2.right * m_hspeed * Time.deltaTime);
-        Debug.Log(Time.deltaTime);
+       
         if (m_hp<=0)
         {
             Die();
         }
-        m_wbproportion = m_whitepoint / (m_whitepoint + m_blackpoint);
-        WhiteProportion.value = m_wbproportion;
-        MywhiteproportionText.text = "White proportion:" + (m_wbproportion * 100).ToString("#0.0")+"%";
-       
-
     }
 
     private void OnTriggerEnter2D (Collider2D collision)
     {
-        if(collision.gameObject.tag=="blackfood")
-        {   
+        if (collision.gameObject.tag == "blackfood")
+        {
             blackflag = 1;
-            playerani.SetFloat("blackflag",1);
-            
-            m_blackpoint=foodparent.addpoint(m_blackpoint,collision.gameObject.name);
-            
+            playerani.SetFloat("blackflag", 1);
+            Destroy(collision.gameObject);
         }
         if (collision.gameObject.tag == "whitefood")
         {
             blackflag = -1;
             playerani.SetFloat("blackflag", -1);
-            
-            m_whitepoint = foodparent.addpoint(m_whitepoint, collision.gameObject.name);
-
+            Destroy(collision.gameObject);
         }
-        if(collision.gameObject.tag == "tombstone")
+        if (collision.gameObject.tag == "tombstone")
         {
           
             m_hp = 0;
@@ -96,21 +89,29 @@ public class playercontrol : MonoBehaviour {
         }
         if (collision.gameObject.name=="rightcollider")
         {
-            if (m_wbproportion>=0.6)
-            {
-                PassLevelMenu.GetComponent<Passlevelmenu>().ShowPassLevelMenu(m_wbproportion);
-
-            }
-            else
-            {
-                DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
-            }
+            WinFlag = 1;
+           PassLevelMenu.GetComponent<Passlevelmenu>().ShowPassLevelMenu(ScoreManager.score);
         }
     }
     private void Die()
     {
-        DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
-       
+        playerani.SetFloat("Dieflag", 1);
+        m_hspeed = 0;
+
+        if (IsAnimationPlaying("whitedie"))
+        {
+            DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
+        }
+
+    }
+    public bool IsAnimationPlaying(string animationName)
+    {
+        
+            AnimatorStateInfo animtorinfo= playerani.GetCurrentAnimatorStateInfo(0);
+
+            
+            return animtorinfo.IsName(animationName) && animtorinfo.normalizedTime < 1.0f;
+
     }
     private void UpandDown()
     {

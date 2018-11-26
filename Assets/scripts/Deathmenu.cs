@@ -9,7 +9,7 @@ public class Deathmenu : MonoBehaviour {
 
     public void ShowDeathMenu()
     {
-        Time.timeScale = 0;
+       
 
         DeathMenu.SetActive(true);
     }
@@ -21,7 +21,7 @@ public class Deathmenu : MonoBehaviour {
 
     public void OnRestart()
     {
-        Time.timeScale = 1f;
+        playercontrol.Dieflag = -1;
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         
        

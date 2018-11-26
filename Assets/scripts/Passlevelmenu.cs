@@ -10,12 +10,11 @@ public class Passlevelmenu : MonoBehaviour {
     public Image starpicture;
 
     
-    public void ShowPassLevelMenu(float proportion)
+    public void ShowPassLevelMenu(float score)
     {
-        Time.timeScale = 0;
-        
+ 
         passlevelMenu.SetActive(true);
-        showstar(proportion);
+        showstar(score);
     }
 
     public void NextLevel() 
@@ -25,21 +24,21 @@ public class Passlevelmenu : MonoBehaviour {
 
     public void OnRestart()
     {
-        Time.timeScale = 1f;
+        
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         
     }
-    public void showstar(float proportion)
+    public void showstar(float score)
     {
-        if (proportion >= 0.6 && proportion < 0.7)
+        if (score < 200)
         {
             starpicture.fillAmount = 0.33f;
         }
-        if (proportion >= 0.7 && proportion <0.8)
+        if (score >= 200 && score < 250)
         {
             starpicture.fillAmount = 0.67f;
         }
-        if (proportion >= 0.8)
+        if (score >= 250)
         {
             starpicture.fillAmount = 1;
         }

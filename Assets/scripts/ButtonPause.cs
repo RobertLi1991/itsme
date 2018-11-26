@@ -8,22 +8,23 @@ public class ButtonPause : MonoBehaviour {
 
     public void OnPause()//点击“暂停”时执行此方法
     {
-        Time.timeScale = 0;
-        ingameMenu.SetActive(true);
+       playercontrol.PauseFlag=1;
+
+    ingameMenu.SetActive(true);
     }
 
     public void OnResume()//点击“回到游戏”时执行此方法
     {
-        Time.timeScale = 1f;
         ingameMenu.SetActive(false);
+        playercontrol.PauseFlag =-1;
+        
     }
 
     public void OnRestart()//点击“重新开始”时执行此方法
     {
-        //Loading Scene0
-        Time.timeScale = 1f;
+        playercontrol.PauseFlag = -1;
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-       
+        
     }
 
 }

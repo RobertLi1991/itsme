@@ -7,16 +7,16 @@ public class foodparent : MonoBehaviour {
     public string foodkind;
     public static float pluspoint;
     public static float newpoint;
-    public static float addpoint(float currentpoint,string foodname)
-    {   if (foodname=="blackfood")
-        { newpoint = currentpoint + 1;}
-        if (foodname == "3blackfood")
-        { newpoint = currentpoint + 3; }
-        if (foodname == "whitefood")
-        { newpoint = currentpoint + 1; }
-        if (foodname == "3whitefood")
-        { newpoint = currentpoint + 3; }
-        return newpoint;
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponent<playercontrol>() != null)
+        {
+            if (this.gameObject.name == "whitefood")
+            {ScoreManager.score+=10; }
+            if (this.gameObject.name == "3whitefood")
+            { ScoreManager.score+=30; }
+        }
     }
+    
 
 }
