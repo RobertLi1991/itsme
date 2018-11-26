@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class playercontrol : MonoBehaviour {
-    
+    //测试一下成功了吗
     public float m_speed = 5f;
     public float m_hspeed = 5f;
     public Animator playerani;
