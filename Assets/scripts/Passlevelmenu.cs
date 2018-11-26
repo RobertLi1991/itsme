@@ -8,6 +8,7 @@ public class Passlevelmenu : MonoBehaviour {
 
     public  GameObject passlevelMenu;
     public Image starpicture;
+    public Text scoretext;
 
     
     public void ShowPassLevelMenu(float score)
@@ -15,6 +16,7 @@ public class Passlevelmenu : MonoBehaviour {
  
         passlevelMenu.SetActive(true);
         showstar(score);
+        showscore(score);
     }
 
     public void NextLevel() 
@@ -43,6 +45,10 @@ public class Passlevelmenu : MonoBehaviour {
             starpicture.fillAmount = 1;
         }
 
+    }
+    public void showscore(float score)
+    {
+        scoretext.text = "Score:" + score;
     }
 
 }

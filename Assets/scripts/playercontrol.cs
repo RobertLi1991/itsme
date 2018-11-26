@@ -9,8 +9,9 @@ public class playercontrol : MonoBehaviour {
 
     public float m_hspeed = 5f;
     public Animator playerani;
-    public  float blackflag=-1;
+    public  static float blackflag=-1;
     public static float Dieflag = -1;
+    public static float Countflag = -1;
     public float WinFlag = -1;
     public static float PauseFlag = -1;
     public float m_hp = 3;
@@ -26,20 +27,23 @@ public class playercontrol : MonoBehaviour {
     
     // Use this for initialization
     void Start () {
-      
+        Countflag = -1;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {   
-        if(Dieflag==1|| WinFlag == 1||PauseFlag==1)
+        if(Dieflag==1|| WinFlag == 1||PauseFlag==1 || Countflag == -1)
         {
             return;
         }
         
         UpandDown();
         transform.Translate(Vector2.right * m_hspeed * Time.deltaTime);
-       
+        if (playerani.GetNextAnimatorStateInfo(0).IsName("whitetakedamage")|| playerani.GetNextAnimatorStateInfo(0).IsName("blackplayertakedamage"))
+        {
+            playerani.SetFloat("Damageflag", -1);
+        }
         if (m_hp<=0)
         {
             Die();
@@ -70,14 +74,16 @@ public class playercontrol : MonoBehaviour {
         if (collision.gameObject.tag == "blackenemy" && blackflag ==-1)
         {
             --m_hp;
-            
             Uiheart.fillAmount = 0.33f * m_hp;
+            playerani.SetFloat("Damageflag", 1);
+
         }
         if (collision.gameObject.tag == "enemywhite" && blackflag ==1)
         {
             --m_hp;
            
             Uiheart.fillAmount = 0.33f * m_hp;
+            playerani.SetFloat("Damageflag", 1);
         }
         if (collision.gameObject.tag == "whiteheart" )
         {
@@ -98,7 +104,7 @@ public class playercontrol : MonoBehaviour {
         playerani.SetFloat("Dieflag", 1);
         m_hspeed = 0;
 
-        if (IsAnimationPlaying("whitedie"))
+        if (IsAnimationPlaying("whitedie")|| IsAnimationPlaying("blackplayerdie"))
         {
             DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
         }
