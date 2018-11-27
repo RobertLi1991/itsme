@@ -30,17 +30,21 @@ public class Passlevelmenu : MonoBehaviour {
         UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         
     }
+    public void Quitgame()
+    {
+        Application.Quit();
+    }
     public void showstar(float score)
     {
         if (score < 200)
         {
             starpicture.fillAmount = 0.33f;
         }
-        if (score >= 200 && score < 250)
+        if (score >= 200 && score < 300)
         {
             starpicture.fillAmount = 0.67f;
         }
-        if (score >= 250)
+        if (score >= 300)
         {
             starpicture.fillAmount = 1;
         }

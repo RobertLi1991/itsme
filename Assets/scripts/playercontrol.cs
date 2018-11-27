@@ -9,7 +9,9 @@ public class playercontrol : MonoBehaviour {
 
     public float m_hspeed = 5f;
     public Animator playerani;
+    
     public  static float blackflag=-1;
+    public static float TouchBombFlag = -1;
     public static float Dieflag = -1;
     public static float Countflag = -1;
     public float WinFlag = -1;
@@ -28,6 +30,7 @@ public class playercontrol : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Countflag = -1;
+        TouchBombFlag = -1;
     }
 	
 	// Update is called once per frame
@@ -64,12 +67,20 @@ public class playercontrol : MonoBehaviour {
             playerani.SetFloat("blackflag", -1);
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.tag == "tombstone")
+        if (collision.gameObject.tag == "Bomb")
         {
-          
+
+            TouchBombFlag = 1;
             m_hp = 0;
-           
-            Uiheart.fillAmount = 0.33f*m_hp;
+            collision.gameObject.GetComponent<Animator>().SetFloat("touchbomb", 1);
+            Uiheart.fillAmount = 0.33f * m_hp;
+
+        }
+        if (collision.gameObject.tag == "Nail" )
+        {
+            --m_hp;
+            Uiheart.fillAmount = 0.33f * m_hp;
+            playerani.SetFloat("Damageflag", 1);
         }
         if (collision.gameObject.tag == "blackenemy" && blackflag ==-1)
         {
@@ -92,6 +103,7 @@ public class playercontrol : MonoBehaviour {
              { m_hp = 3; }
            
             Uiheart.fillAmount = 0.33f * m_hp;
+            Destroy(collision.gameObject);
         }
         if (collision.gameObject.name=="rightcollider")
         {

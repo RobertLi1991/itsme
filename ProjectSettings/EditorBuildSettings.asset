@@ -11,7 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scence/level1.unity
     guid: 2f3c73fc36c0b59449eccc55808dba01
-  - enabled: 1
-    path: Assets/scence/level2.unity
-    guid: c831d0a0909f5944a8462dc1e18295a6
   m_configObjects: {}
