@@ -12,9 +12,16 @@ public class foodparent : MonoBehaviour {
         if (other.GetComponent<playercontrol>() != null)
         {
             if (this.gameObject.name == "whitefood")
-            {ScoreManager.score+=10; }
+            {ScoreManager.score1+=10; }
             if (this.gameObject.name == "3whitefood")
-            { ScoreManager.score+=30; }
+            { ScoreManager.score1+=30; }
+        }
+        if (other.GetComponent<playercontrol2>() != null)
+        {
+            if (this.gameObject.name == "whitefood")
+            { ScoreManager.score2 += 10; }
+            if (this.gameObject.name == "3whitefood")
+            { ScoreManager.score2 += 30; }
         }
     }
     

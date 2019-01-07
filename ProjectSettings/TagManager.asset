@@ -12,6 +12,7 @@ TagManager:
   - blackfood
   - Bomb
   - Nail
+  - yellowstone
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 

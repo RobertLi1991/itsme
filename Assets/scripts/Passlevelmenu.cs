@@ -9,26 +9,49 @@ public class Passlevelmenu : MonoBehaviour {
     public  GameObject passlevelMenu;
     public Image starpicture;
     public Text scoretext;
+    public Text Winner;
+    public float WinnerPlayerNumber;
 
     
-    public void ShowPassLevelMenu(float score)
+    public void ShowPassLevelMenu()
     {
- 
+       
         passlevelMenu.SetActive(true);
-        showstar(score);
-        showscore(score);
+        if (RealGameManager.Scenename == "level1")
+        {
+            showstar(ScoreManager.score1);
+            showscore(ScoreManager.score1);
+        }
+        else
+        {
+           
+            ShowWinner();
+        }
     }
 
     public void NextLevel() 
     {
-        SceneManager.LoadScene("level2");
+        SceneManager.LoadScene("level3");
     }
-
+    public void BacktoStartMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
     public void OnRestart()
     {
-        
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-        
+        playercontrol.WinFlag = -1;
+        playercontrol2.WinFlag2 = -1;
+        playercontrol.Dieflag1 = -1;
+        playercontrol2.Dieflag2 = -1;
+        if (RealGameManager.Scenename == "level2")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
+
     }
     public void Quitgame()
     {
@@ -54,5 +77,43 @@ public class Passlevelmenu : MonoBehaviour {
     {
         scoretext.text = "Score:" + score;
     }
-
+    public void ShowWinner()
+    {
+        if (playercontrol.Dieflag1==1)
+        {
+            Winner.text = "The winer is Player2";
+            WinnerPlayerNumber = 2;
+            showstar(ScoreManager.score2);
+            scoretext.text = "P1: Failed  P2: "+ScoreManager.score2;
+        }
+        if (playercontrol2.Dieflag2 == 1)
+        {
+            Winner.text = "The winer is Player1";
+            showstar(ScoreManager.score1);
+            scoretext.text = "P1: " + ScoreManager.score1+ "  P2: Failed";
+        }
+        if (playercontrol.Dieflag1 == -1 && playercontrol2.Dieflag2 == -1)
+        {
+            if (ScoreManager.score1 > ScoreManager.score2)
+            {
+                Winner.text = "The winer is Player1";
+                WinnerPlayerNumber = 1;
+                showstar(ScoreManager.score1);
+                
+            }
+            else if (ScoreManager.score1 < ScoreManager.score2 && playercontrol2.Dieflag2 == -1)
+            {
+                Winner.text = "The winer is Player2";
+                WinnerPlayerNumber = 2;
+                showstar(ScoreManager.score2);
+                
+            }
+            else
+            {
+                Winner.text = "It's a tie";
+                showstar(ScoreManager.score2);
+            }
+            scoretext.text = "P1: " + ScoreManager.score1 + "  P2: " + ScoreManager.score2;
+        }
+    }
 }

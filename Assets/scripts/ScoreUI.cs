@@ -14,8 +14,11 @@ public class ScoreUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(m_textComponent!=null)
-        {
-            m_textComponent.text = "Score:" + ScoreManager.score;
+        {   if (gameObject.name=="Score")
+            m_textComponent.text = "Score:" + ScoreManager.score1;
+            if (gameObject.name == "Score2")
+                m_textComponent.text = "Score:" + ScoreManager.score2;
+
         }
-	}
+    }
 }

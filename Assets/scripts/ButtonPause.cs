@@ -19,12 +19,23 @@ public class ButtonPause : MonoBehaviour {
         playercontrol.PauseFlag =-1;
         
     }
-
+    public void BacktoStartMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
     public void OnRestart()//点击“重新开始”时执行此方法
     {
         playercontrol.PauseFlag = -1;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-        
+        playercontrol.Dieflag1 = -1;
+        playercontrol2.Dieflag2 = -1;
+        if (RealGameManager.Scenename == "level2")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
     }
 
 }

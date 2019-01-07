@@ -21,10 +21,18 @@ public class Deathmenu : MonoBehaviour {
 
     public void OnRestart()
     {
-        playercontrol.Dieflag = -1;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        playercontrol.Dieflag1 = -1;
+        playercontrol2.Dieflag2 = -1;
         
-       
+        if (RealGameManager.Scenename == "level2")
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
+
     }
 
 }

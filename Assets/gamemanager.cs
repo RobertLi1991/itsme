@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -16,5 +16,6 @@ public class gamemanager : MonoBehaviour {
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
+        
 	}
 }
