@@ -32,19 +32,53 @@ public class playercontrol : MonoBehaviour {
     [SerializeField]
     private GameObject reborn1;
 
+    public GameObject P2;
+
     // Use this for initialization
     void Start () {
         Countflag = -1;
         TouchBombFlag = -1;
-        yellowlayer1 = transform.Find("Yellowcolor").gameObject;
-        P1Label=transform.Find("1P").gameObject;
+        if (RealGameManager.Scenename == "level2")
+        {
+            yellowlayer1 = transform.Find("Yellowcolor").gameObject;
+                P1Label=transform.Find("1P").gameObject;
+        }
+
+        Dieflag1 = -1;
+        WinFlag = -1;
+        PauseFlag = -1;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if(tutorial.tutorialOpenFlag==1)
+        {
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && Dieflag1 == 1 && playercontrol2.Dieflag2 == -1 && ScoreManager.score1 >= 50)
+        {
+            
+            reborn1.GetComponent<Text>().enabled = false;
+            Dieflag1 = -1;
+            m_hp = 3;
+            Uiheart.fillAmount = 0.33f * m_hp;
+            playerani.SetFloat("Dieflag", -1);
+            transform.position = P2.transform.position;
+            P1Label.GetComponent<Renderer>().enabled = true;
+            m_hspeed = 5f;
+            ScoreManager.score1 -= 50;
+        }
+        if (playercontrol2.WinFlag2 == 1)
+        {
+            Destroy(reborn1);
+        }
+        if (playercontrol2.Dieflag2 == 1 && Dieflag1 == 1)
+        {
+            Destroy(reborn1);
+        }
 
-        if(Dieflag1==1|| WinFlag == 1||PauseFlag==1 || Countflag == -1)
+        if (Dieflag1==1|| WinFlag == 1||PauseFlag==1 || Countflag == -1)
         {
             return;
         }
@@ -62,7 +96,7 @@ public class playercontrol : MonoBehaviour {
         P1YPosition = transform.position.y;
         P1P2YDistance = P1YPosition - playercontrol2.P2YPosition;
         
-       
+
     }
 
     private void OnTriggerEnter2D (Collider2D collision)
@@ -126,7 +160,8 @@ public class playercontrol : MonoBehaviour {
         if (collision.gameObject.name=="rightcollider")
         {
             WinFlag = 1;
-
+          
+            Destroy(reborn1);
         }
     }
     private void Die()
@@ -137,11 +172,16 @@ public class playercontrol : MonoBehaviour {
         if (IsAnimationPlaying("whitedie")|| IsAnimationPlaying("blackplayerdie"))
         {
             Dieflag1 = 1;
-            Destroy(P1Label);
-            //DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
+            if (RealGameManager.Scenename == "level2")
+            {
+                P1Label.GetComponent<Renderer>().enabled = false;
+            }
         }
-        reborn1.SetActive(true);
 
+        if (RealGameManager.Scenename == "level2"&&ScoreManager.score1 >= 50 && playercontrol2.Dieflag2 == -1 && Dieflag1 == 1)
+            {
+            reborn1.GetComponent<Text>().enabled = true; 
+        }
     }
     public bool IsAnimationPlaying(string animationName)
     {
@@ -172,5 +212,5 @@ public class playercontrol : MonoBehaviour {
         
 
     }
-
+   
 }

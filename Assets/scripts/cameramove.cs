@@ -14,7 +14,10 @@ public class cameramove : MonoBehaviour
     void Start()
     {
         offset = transform.position - target.position;
-        offset2= transform.position - target2.position;
+        if (RealGameManager.Scenename == "level2")
+        {
+            offset2 = transform.position - target2.position;
+        }
         m_cameraY = transform.position.y;
 
     }
@@ -28,8 +31,9 @@ public class cameramove : MonoBehaviour
             targetCamPos.y = m_cameraY;
             transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
         }
-        else if(playercontrol.Dieflag1 == 1 && playercontrol2.Dieflag2 != 1)
+        else if(RealGameManager.Scenename == "level2" && playercontrol.Dieflag1 == 1 && playercontrol2.Dieflag2 != 1)
         {
+            
             Vector3 targetCamPos2 = target2.position + offset2;
             targetCamPos2.y = m_cameraY;
             transform.position = Vector3.Lerp(transform.position, targetCamPos2, smoothing * Time.deltaTime);

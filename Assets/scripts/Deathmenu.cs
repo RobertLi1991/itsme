@@ -26,11 +26,12 @@ public class Deathmenu : MonoBehaviour {
         
         if (RealGameManager.Scenename == "level2")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+            SceneManager.LoadScene("level2");
+       
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            SceneManager.LoadScene("level1");
         }
 
     }

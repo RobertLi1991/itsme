@@ -21,6 +21,7 @@ public class Passlevelmenu : MonoBehaviour {
         {
             showstar(ScoreManager.score1);
             showscore(ScoreManager.score1);
+            RecordHighScore(ScoreManager.score1);
         }
         else
         {
@@ -31,7 +32,7 @@ public class Passlevelmenu : MonoBehaviour {
 
     public void NextLevel() 
     {
-        SceneManager.LoadScene("level3");
+        //SceneManager.LoadScene("level3");
     }
     public void BacktoStartMenu()
     {
@@ -45,11 +46,11 @@ public class Passlevelmenu : MonoBehaviour {
         playercontrol2.Dieflag2 = -1;
         if (RealGameManager.Scenename == "level2")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+            SceneManager.LoadScene("level2");
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            SceneManager.LoadScene("level1");
         }
 
     }
@@ -85,12 +86,14 @@ public class Passlevelmenu : MonoBehaviour {
             WinnerPlayerNumber = 2;
             showstar(ScoreManager.score2);
             scoretext.text = "P1: Failed  P2: "+ScoreManager.score2;
+            RecordHighScore(ScoreManager.score2);
         }
         if (playercontrol2.Dieflag2 == 1)
         {
             Winner.text = "The winer is Player1";
             showstar(ScoreManager.score1);
             scoretext.text = "P1: " + ScoreManager.score1+ "  P2: Failed";
+            RecordHighScore(ScoreManager.score1);
         }
         if (playercontrol.Dieflag1 == -1 && playercontrol2.Dieflag2 == -1)
         {
@@ -99,21 +102,41 @@ public class Passlevelmenu : MonoBehaviour {
                 Winner.text = "The winer is Player1";
                 WinnerPlayerNumber = 1;
                 showstar(ScoreManager.score1);
-                
+                RecordHighScore(ScoreManager.score1);
             }
             else if (ScoreManager.score1 < ScoreManager.score2 && playercontrol2.Dieflag2 == -1)
             {
                 Winner.text = "The winer is Player2";
                 WinnerPlayerNumber = 2;
                 showstar(ScoreManager.score2);
-                
+                RecordHighScore(ScoreManager.score2);
             }
             else
             {
                 Winner.text = "It's a tie";
                 showstar(ScoreManager.score2);
+                RecordHighScore(ScoreManager.score2);
             }
             scoretext.text = "P1: " + ScoreManager.score1 + "  P2: " + ScoreManager.score2;
+        }
+    }
+    public void RecordHighScore(float score)
+    {
+        if(RealGameManager.Scenename == "level2")
+        {
+            if (score > PlayerPrefs.GetFloat("L2HighestScore", 0))
+            {
+                PlayerPrefs.SetFloat("L2HighestScore", score);
+
+            }
+        }
+        else
+        {
+            if (score > PlayerPrefs.GetFloat("L1HighestScore", 0))
+            {
+                PlayerPrefs.SetFloat("L1HighestScore", score);
+
+            }
         }
     }
 }

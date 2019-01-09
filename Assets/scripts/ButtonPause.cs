@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonPause : MonoBehaviour {
 
@@ -21,7 +22,7 @@ public class ButtonPause : MonoBehaviour {
     }
     public void BacktoStartMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+       SceneManager.LoadScene("startscreen");
     }
     public void OnRestart()//点击“重新开始”时执行此方法
     {
@@ -30,11 +31,11 @@ public class ButtonPause : MonoBehaviour {
         playercontrol2.Dieflag2 = -1;
         if (RealGameManager.Scenename == "level2")
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+            SceneManager.LoadScene("level2");
         }
         else
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+            SceneManager.LoadScene("level1");
         }
     }
 

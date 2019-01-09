@@ -10,7 +10,7 @@ public class TitleSceneScript : MonoBehaviour
     public void OnStartButtonClick()
     {
         SceneManager.LoadScene(m_SceneToLoadOnStartClick);
-        Debug.Log("doing");
+       
     }
 
 	

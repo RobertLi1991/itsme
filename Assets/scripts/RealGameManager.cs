@@ -12,7 +12,7 @@ public class RealGameManager : MonoBehaviour
     public float Invokeflag1 = -1;
     public static string Scenename;
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         Scene scene = SceneManager.GetActiveScene();
         Scenename = scene.name;
@@ -26,6 +26,7 @@ public class RealGameManager : MonoBehaviour
         {
             if (playercontrol.Dieflag1 == 1 && playercontrol2.Dieflag2 == 1)
             {
+               
                 DeathMenu.GetComponent<Deathmenu>().ShowDeathMenu();
             }
         }

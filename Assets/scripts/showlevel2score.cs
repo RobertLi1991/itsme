@@ -14,8 +14,5 @@ public class showlevel2score : MonoBehaviour {
         }
     
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	
 }
